@@ -89,10 +89,8 @@ public class RunLoopSource {
             self.info     = nil
         }
         
-        let sourceContextPointer = UnsafeMutablePointer<CFRunLoopSourceContext>.allocate(capacity: 1)
-        sourceContextPointer.initialize(to: CFRunLoopSourceContext())
-        CFRunLoopSourceGetContext(self.cfsource, sourceContextPointer)
-        let sourceContext = sourceContextPointer.pointee
+        var sourceContext = CFRunLoopSourceContext()
+        CFRunLoopSourceGetContext(self.cfsource, &sourceContext)
         
         let opaquePointer = OpaquePointer(sourceContext.info)
         let unsafePointer = UnsafeMutablePointer<RunLoopSource>(opaquePointer)
